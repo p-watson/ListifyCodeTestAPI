@@ -1,4 +1,5 @@
-﻿using ListifyCodeTest.Models;
+﻿using ListifyCodeTest.Filters;
+using ListifyCodeTest.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,27 +9,26 @@ using System.Web.Http;
 
 namespace ListifyCodeTest.Controllers
 {
+    [ListifyExceptionFilters]
     public class ListifyController : ApiController
     {
+        [Route("listify/{begin:int}/{end:int}/{index:int}")]
         [HttpGet]
-        public IHttpActionResult Listify(int begin, int end, int index)
+        public int Listify(int begin, int end, int index)
         {
-            try
-            {
-                var list = new Listify(begin, end);
-                var indexedValue = list[index];
+            var list = new Listify(begin, end);
+            var indexedValue = list[index];
 
-                return Json(list);
-            }
-            catch (IndexOutOfRangeException indexException)
-            {
-                return Json("The index parameter was out of bounds.");
-            }
-            catch (ArgumentOutOfRangeException argumentException)
-            {
-                return Json("The begin was higher than end, or end was lower than begin.");
-            }
+            return indexedValue;
+        }
 
+        [Route("listify/{begin:int}/{end:int}")]
+        [HttpGet]
+        public IEnumerable<int> Listify(int begin, int end)
+        {
+            var list = new Listify(begin, end);
+
+            return list.Range;
         }
     }
 }

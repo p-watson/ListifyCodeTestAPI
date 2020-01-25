@@ -10,7 +10,6 @@ namespace ListifyCodeTest.Models
     {
         public int Min { get; set; }
         public int Max { get; set; }
-        public int IndexedValue { get; set; }
         public IEnumerable<int> Range { get; set; }
 
         public int this[int index]
@@ -21,19 +20,15 @@ namespace ListifyCodeTest.Models
 
         public Listify(int min, int max)
         {
-            //Making an assumption that we are using ints since that is what Enumerable.Range() returns.
-            //TODO: what to do if they send just like..a massive number?
-            //TODO: Should probably take in strings and just try to parse them. Then I can toss out a format exception if things are not strings.
-            if (max < min)
+            if (min > max)
             {
-                //This should actually be handled by Enumerable.
-                //throw new ArgumentOutOfRangeException("The begin must be lower than the end.");
+                throw new ArgumentOutOfRangeException();
             }
-
+            
             this.Min = min;
-            this.Max = max;
-
-            this.Range = Enumerable.Range(min, max);
+            this.Max = max - min + 1;
+            
+            this.Range = Enumerable.Range(this.Min, this.Max);
         }
 
         private int getIndex(int index)
@@ -60,9 +55,7 @@ namespace ListifyCodeTest.Models
 
                 indexCount++;
             }
-
-            //TODO: Check?
-            this.IndexedValue = returnValue;
+            
             return returnValue;
         }
 
