@@ -18,6 +18,11 @@ namespace ListifyCodeTest.Models
             set => throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Generates a new Listify object with a range dictated by the parameters.
+        /// </summary>
+        /// <param name="min">The minimum value, or beginning, of the Listify object.</param>
+        /// <param name="max">The maximum value, or end, of the Listify object.</param>
         public Listify(int min, int max)
         {
             if (min > max)
@@ -33,6 +38,11 @@ namespace ListifyCodeTest.Models
             this.Range = Enumerable.Range(min, rangeMax);
         }
 
+        /// <summary>
+        /// Returns the integer value at the specified index.
+        /// </summary>
+        /// <param name="index">The index to return.</param>
+        /// <returns>The value at the specified index.</returns>
         private int getIndex(int index)
         {
             var returnValue = 0;
