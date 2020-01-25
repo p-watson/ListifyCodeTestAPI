@@ -26,9 +26,11 @@ namespace ListifyCodeTest.Models
             }
             
             this.Min = min;
-            this.Max = max - min + 1;
-            
-            this.Range = Enumerable.Range(this.Min, this.Max);
+            this.Max = max;
+
+            var rangeMax = max - min + 1;
+
+            this.Range = Enumerable.Range(min, rangeMax);
         }
 
         private int getIndex(int index)
